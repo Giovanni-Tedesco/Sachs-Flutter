@@ -20,7 +20,7 @@ def flutterVersionName = localProperties.getProperty('flutter.versionName')
 if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
-
+apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
@@ -32,7 +32,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
@@ -40,13 +40,15 @@ android {
 
     lintOptions {
         disable 'InvalidPackage'
+        checkReleaseBuilds false
+        abortOnError false
     }
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.example.sachs_app"
         minSdkVersion 16
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -54,7 +56,7 @@ android {
     }
 
     signingConfigs {
-        release {
+        debug {
             keyAlias keystoreProperties['keyAlias']
             keyPassword keystoreProperties['keyPassword']
             storeFile file(keystoreProperties['storeFile'])
@@ -62,8 +64,8 @@ android {
         }
     }
     buildTypes {
-        release {
-            signingConfig signingConfigs.release
+        debug {
+            signingConfig signingConfigs.debug
         }
     }
 }
@@ -81,4 +83,3 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 }
-apply plugin: 'com.google.gms.google-services'

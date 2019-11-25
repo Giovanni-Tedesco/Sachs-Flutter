@@ -5,10 +5,8 @@ import 'utils/sign_in.dart';
 import 'roots/home_page.dart';
 
 class LoginPage extends StatefulWidget {
-
   @override
   _LoginPageState createState() => _LoginPageState();
-
 }
 
 
@@ -39,7 +37,7 @@ class _LoginPageState extends State<LoginPage> {
         signInWithGoogle().whenComplete(() {
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) {
-                  return HomePage();
+                  return FirstScreen();
                 }
               )
             );
