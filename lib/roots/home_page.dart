@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+import 'package:sachs_app/Classes/Announcement.dart';
+import 'package:sachs_app/utils/app_utils.dart';
+import 'package:sachs_app/utils/dbAccessor.dart';
 
 class HomePage extends StatefulWidget {
 
@@ -12,12 +17,23 @@ class _HomePageState extends State<HomePage> {
 
   final dbReference = Firestore.instance;
 
-  void getData() {
-    dbReference.collection("clubs").getDocuments()
-    .then((QuerySnapshot snapshot) {
-      snapshot.documents.forEach((f) => print('${f.data}}'));
-    });
+  List<Announcement> _announcements = DbAccessor.pullAnnouncements();
+
+  Widget _buildAnnouncements(BuildContext context, int p){
+    return Column(
+      children: <Widget>[
+        Text(
+          "${_announcements[p].title}"
+
+        ),
+        Text(
+          "${_announcements[p].body}"
+        )
+      ],
+    );
   }
+
+
   @override
   Widget build(BuildContext context){
     return Scaffold(
@@ -26,12 +42,26 @@ class _HomePageState extends State<HomePage> {
         leading: IconButton(
           icon: Icon(Icons.settings),
           onPressed: () {
-            dbReference.collection("clubs").getDocuments()
-            .then((QuerySnapshot snapshot) {
-              snapshot.documents.forEach((f) => print('${f.data}}'));
-            });
+            // for(var i = 0; i < _announcements.length; i++){
+            //   print(_announcements[i].body);
+            // }
+            print(_announcements.length);
           },
-        )
+        ),
+      ),
+      body: ListView.builder(
+
+        itemCount: _announcements.length,
+        itemBuilder: (BuildContext context, int p) {
+          return Column(
+            
+            children: <Widget>[
+              Container(
+                child: Text("FORK THIS WORLD")
+              )
+            ],
+          );
+        },
       ),
     );
   }
