@@ -56,9 +56,8 @@ class _HomePageState extends State<HomePage> {
           return Column(
             
             children: <Widget>[
-              Container(
-                child: Text("FORK THIS WORLD")
-              )
+              Text(_announcements[p].title, style: TextStyle(fontSize: 24)),
+              Text(_announcements[p].body)  
             ],
           );
         },
